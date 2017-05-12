@@ -1154,7 +1154,7 @@ int GetOptions (char *ctlf)
       com.ncode = 20;
 
    if(com.alpha==0)  { com.fix_alpha=1; com.nalpha=0; }
-   if(com.clock<1 || com.clock>3) error2("clock should be 1, 2, 3?");
+   if(com.clock<1 || com.clock>4) error2("clock should be 1, 2, 3, 4?"); /* MdR: Added clock 4. */
    if (mcmc.burnin <= 0) puts("burnin=0: no automatic step adjustment?");
 
    if (BFbeta && mcmc.usedata ==0)
@@ -3113,7 +3113,7 @@ double lnpriorRates (void)
    double zz, r=-1, rA,r1,r2, y1,y2;
    double a, b;
 
-   if(com.clock==3 && data.priorrate==1)
+   if(com.clock>2 && data.priorrate==1) /* MdR. */
       error2("gamma prior for rates for clock3 not implemented yet.");
    else if(com.clock==2 && data.priorrate==1) {   /* clock2, gamma rate prior */
       lnpR = 0;
@@ -3140,7 +3140,7 @@ double lnpriorRates (void)
          }
       }
    }
-   else if(com.clock==3 && data.priorrate ==0) {  /* clock3, LN rate prior */
+   else if(com.clock>2 && data.priorrate ==0) {  /* clock3, LN rate prior */ /* MdR */
       for(inode=0; inode<sptree.nnode; inode++) {
          if(sptree.nodes[inode].nson==0) continue; /* skip the tips */
          dad = sptree.nodes[inode].father;
@@ -3158,8 +3158,9 @@ double lnpriorRates (void)
             rA = (inode==sptree.root ? data.rgene[locus] : sptree.nodes[inode].rates[locus]);
             r1 = sptree.nodes[sons[0]].rates[locus];
             r2 = sptree.nodes[sons[1]].rates[locus];
-            y1 = log(r1/rA)+(tA+t1)*data.sigma2[locus]/2;
-            y2 = log(r2/rA)+(tA+t2)*data.sigma2[locus]/2;
+	    /* MdR: clock 4 is GBM without correction factor) */
+            y1 = log(r1/rA); if (com.clock==3) y1 = y1 +(tA+t1)*data.sigma2[locus]/2;
+            y2 = log(r2/rA); if (com.clock==3) y2 = y2 +(tA+t2)*data.sigma2[locus]/2;
             zz = (y1*y1*Tinv[0]+2*y1*y2*Tinv[1]+y2*y2*Tinv[3]);
             lnpR -= zz/(2*data.sigma2[locus]) + log(detT*square(data.sigma2[locus]))/2 + log(r1*r2);
          }
@@ -3207,8 +3208,9 @@ double lnpriorRatioRates (int locus, int inodeChanged, double rold)
             rA = (inode==sptree.root ? data.rgene[locus] : sptree.nodes[inode].rates[locus]);
             r1 = sptree.nodes[sons[0]].rates[locus];
             r2 = sptree.nodes[sons[1]].rates[locus];
-            y1 = log(r1/rA)+(tA+t1)*data.sigma2[locus]/2;
-            y2 = log(r2/rA)+(tA+t2)*data.sigma2[locus]/2;
+            /* MdR: clock 4 is GBM without correction factor) */
+	    y1 = log(r1/rA); if (com.clock==3) y1 = y1 +(tA+t1)*data.sigma2[locus]/2;
+	    y2 = log(r2/rA); if (com.clock==3) y2 = y2 +(tA+t2)*data.sigma2[locus]/2;
             zz = (y1*y1*Tinv[0]+2*y1*y2*Tinv[1]+y2*y2*Tinv[3]);
             zz = zz/(2*data.sigma2[locus]) + log(r1*r2);
             lnpRd -= (OldNew==0 ? -1 : 1) * zz;
@@ -3478,7 +3480,7 @@ int mixing (double *lnL, double finetune, char *accept)
    if(finetune<=0) error2("steplength = 0 in mixing");
    if(com.TipDate)
       return mixingTipDate(lnL, finetune, accept);
-/*
+/* MdR: TODO: Deal with com.clock==4
    else if(com.clock==2 || com.clock==3)
       return mixingCladeStretch(lnL, finetune, accept);
 */
