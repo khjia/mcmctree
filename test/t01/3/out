@@ -1,0 +1,49 @@
+MCMCTREE (paml version 4.9d, February 2017) ../mc.paml
+
+
+*** Locus 1 ***
+
+Printing out site pattern counts
+
+
+         2         16  P
+
+a                               TTTTCCCCAA AAGGGG
+b                               TCAGTCAGTC AGTCAG
+
+
+
+    9    3    2    7    5    7   11    5    8    6    8    5    5    4    2
+   13
+
+
+Frequencies..
+                                    T      C      A      G
+a                              0.21000 0.28000 0.27000 0.24000 GC = 0.520
+b                              0.27000 0.20000 0.23000 0.30000 GC = 0.500
+
+Homogeneity statistic: X2 = 0.03070 G = 0.03080 
+
+Average                        0.24000 0.24000 0.25000 0.27000
+
+# constant sites:     37 (37.00%)
+ln Lmax (unconstrained) = -265.954083
+
+Time used:  0:03
+
+mean of parameters using all iterations
+   0.99862   0.84972
+
+Species tree for FigTree.  Branch lengths = posterior mean times; 95% CIs = labels
+(1_a, 2_b) 3 ;
+
+(a: 0.998623, b: 0.998623);
+
+(a: 0.998623, b: 0.998623) [&95%={0.813407, 1.20409}];
+
+
+Posterior mean (95% Equal-tail CI) (95% HPD CI) HPD-CI-width
+
+t_n3           0.9986 (0.8134, 1.2041) (0.8075, 1.1967) 0.3892 (Jnode  2)
+mu             0.8495 (0.4623, 1.9764) (0.3718, 1.5147) 1.1428
+lnL         -274.4143 (-277.0870, -273.7380) (-276.5370, -273.7380) 2.7990
