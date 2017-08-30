@@ -652,7 +652,7 @@ double lnLmorphF73 (int inode, int locus, double *vp)
    vv = v[0] + v[1]; 
    *vp = nodes[inode].branch + v[0]*v[1]/vv;
    for(h=0,zz=0; h<com.ls; h++) {
-      for(j=0; j<2; j++)  x[j] = data.zmorph[locus][sons[j]][h];
+      for(j=0; j<2; j++)  x[j] = data.zmorph[locus][sons[j]][h]; /* This is the ancestral reconstruction. */
       data.zmorph[locus][inode][h] = (v[0]*x[1] + v[1]*x[0])/vv;
       zz += square(x[0] - x[1]);
    }
