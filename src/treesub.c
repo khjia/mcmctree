@@ -541,10 +541,11 @@ int ReadSeq(FILE *fout, FILE *fseq, int cleandata, int locus)
 #if(MCMCTREE)
         if(strchr(line, 'M') || strchr(line, 'm'))  {
 	  data.datatype[locus] = MORPHC;
-	  char c[2];
+	  char c[2]; data.zpopvar[locus] = 0; data.ldetRm[locus] = 0;                /* MdR */
 	  sscanf(line, "%s %lf %lf", c, &data.zpopvar[locus], &data.ldetRm[locus]);  /* MdR */
-	  printf("MdR: line: %s\n", line);
+	  /* printf("MdR: line: %s\n", line); MdR. */
 	  printf("MdR: got %c %f %f, locus: %d\n", c, data.zpopvar[locus], data.ldetRm[locus], locus);
+          /* TODO: Do some error checking. MdR. */
 	}
 #endif
    }

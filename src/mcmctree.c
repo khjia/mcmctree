@@ -661,7 +661,7 @@ double lnLmorphF73(int inode, int locus, double *vp)
       data.zmorph[locus][inode][h] = (v[0] * x[1] + v[1] * x[0]) / vv;
       zz += square(x[0] - x[1]);
    }
-   lnL += y = -0.5*com.ls*log(2 * Pi*vv) - zz / (2 * vv);
+   lnL += y = -0.5*com.ls*log(2 * Pi*vv) - zz / (2 * vv) - data.ldetRm[locus] / 2; /* MdR */
    if (debug) {
       printf("\nnode %2d sons %2d %2d v %6.4f %7.4f vp %7.4f, x %7.4f lnL = %7.4f %8.4f",
          inode + 1, sons[0] + 1, sons[1] + 1, v[0], v[1], *vp, data.zmorph[locus][inode][0], y, lnL);
