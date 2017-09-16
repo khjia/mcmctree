@@ -148,6 +148,7 @@ struct DATA { /* locus-specific data and tree information */
    int priortime, priorrate;
    char datatype[NGENE], *z[NGENE][NS], cleandata[NGENE];
    double *zmorph[NGENE][NS * 2 - 1], *Rmorph[NGENE];
+   double zpopvar[NMORPHLOCI], ldetRm[NMORPHLOCI]; /* MdR */
    double *fpatt[NGENE], lnpT, lnpR, lnpDi[NGENE], pi[NGENE][NCODE];
    double kappa[NGENE], alpha[NGENE];
    double BDS[4];  /* parameters in the birth-death-sampling model */

@@ -539,7 +539,13 @@ int ReadSeq(FILE *fout, FILE *fseq, int cleandata, int locus)
       if (!fgets(line, lline, fseq)) error2("ReadSeq: first line");
       com.readpattern = (strchr(line, 'P') || strchr(line, 'p'));
 #if(MCMCTREE)
-      if (strchr(line, 'M') || strchr(line, 'm'))  data.datatype[locus] = MORPHC;
+        if(strchr(line, 'M') || strchr(line, 'm'))  {
+	  data.datatype[locus] = MORPHC;
+	  char c[2];
+	  sscanf(line, "%s %lf %lf", c, &data.zpopvar[locus], &data.ldetRm[locus]);  /* MdR */
+	  printf("MdR: line: %s\n", line);
+	  printf("MdR: got %c %f %f, locus: %d\n", c, data.zpopvar[locus], data.ldetRm[locus], locus);
+	}
 #endif
    }
 #if(MCMCTREE)
