@@ -651,6 +651,8 @@ double lnLmorphF73(int inode, int locus, double *vp)
          t = nodes[inode].age - nodes[sons[j]].age;
          nu = (com.clock == 1 ? data.rgene[locus] : sptree.nodes[sons[j]].rates[locus]);
          v[j] = t*nu;
+	 /* Correct blen for population variance. MdR. */
+	 if (nodes[sons[j]].nson == 0) v[j] += data.zpopvar[locus];
       }
    }
    vv = v[0] + v[1];
